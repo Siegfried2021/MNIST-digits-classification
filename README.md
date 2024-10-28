@@ -8,10 +8,49 @@ The model uses the classic MNIST dataset, which contains images of digits (28x28
 
 ## How the Model Works
 
-The model is a simple neural network classifier designed as follows:
-- **Input Layer**: Accepts each 28x28 image, flattened into a 784-dimensional vector.
-- **Hidden Layers**: Two fully connected layers with 1024 and 512 units, respectively, both followed by ReLU activation for non-linearity.
-- **Output Layer**: A 10-unit layer with LogSoftmax activation, providing the probability distribution over the 10 possible digit classes.
+The model is a fully connected neural network built using PyTorch, specifically designed to classify the MNIST dataset of handwritten digits. The architecture includes two hidden layers with ReLU activations and an output layer with LogSoftmax activation for multi-class classification.
+
+### Architecture Details
+
+- **Input Layer**: 
+  - Accepts a 28x28 grayscale image, flattened into a 784-dimensional vector.
+
+- **Hidden Layer 1**:
+  - **Units**: 1024
+  - **Activation**: ReLU
+  - **Purpose**: Learns complex patterns by introducing non-linearity. The high number of units allows the model to capture various details and features of the digits.
+
+- **Hidden Layer 2**:
+  - **Units**: 512
+  - **Activation**: ReLU
+  - **Purpose**: Further refines patterns learned in the first layer, focusing on higher-level features that help distinguish digit classes.
+
+- **Output Layer**:
+  - **Units**: 10 (one for each digit class, 0–9)
+  - **Activation**: LogSoftmax
+  - **Purpose**: Outputs log-probabilities for each class, suitable for multi-class classification tasks with `NLLLoss` (Negative Log Likelihood Loss).
+
+### Summary Table
+
+| Layer              | Units | Activation | Output Shape |
+|--------------------|-------|------------|--------------|
+| Input Layer        | 784   | -          | (batch_size, 784) |
+| Hidden Layer 1     | 1024  | ReLU       | (batch_size, 1024) |
+| Hidden Layer 2     | 512   | ReLU       | (batch_size, 512) |
+| Output Layer       | 10    | LogSoftmax | (batch_size, 10) |
+
+### Loss and Optimization
+
+- **Loss Function**: Negative Log Likelihood Loss (NLLLoss), which works with LogSoftmax to compute the probability of the correct class and penalize incorrect predictions.
+- **Optimizer**: Adam Optimizer with a learning rate of 0.001, chosen for its efficiency in handling sparse gradients and adaptability to a variety of datasets.
+
+### Model Workflow
+
+1. **Flattening**: Each 28x28 image is flattened to a 784-dimensional vector.
+2. **Feedforward**: The data passes through two hidden layers with ReLU activation to learn non-linear features.
+3. **Classification**: The output layer applies LogSoftmax, converting the output to log-probabilities for each class, which are then used to predict the most likely digit.
+
+This architecture balances simplicity and power, enabling high accuracy on the MNIST dataset while remaining computationally efficient.
 
 **Objective**: The network minimizes the negative log likelihood loss (NLLLoss), aiming to maximize the probability of the correct class.
 
